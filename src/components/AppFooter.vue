@@ -1,0 +1,22 @@
+<script setup lang="ts">
+const currentYear = new Date().getFullYear();
+const footerLink = import.meta.env.VITE_APP_FOOTER_LINK;
+const footer = import.meta.env.VITE_APP_FOOTER;
+</script>
+
+<template>
+	<footer
+		class="bottom-0 z-40 flex border-t bg-background/80 backdrop-blur-lg border-border"
+	>
+		<div class="container flex items-center h-14 max-w-screen-2xl">
+			<span class="mx-2">NekoMeow © {{ currentYear }} TurboHsu</span>
+			<span>|</span>
+			<span class="mx-2">All Rights Reserved</span>
+		</div>
+		<div
+			class="container flex items-center justify-between space-x-2 whitespace-nowrap md:justify-end"
+		>
+			<a :herf="footerLink">{{ footer }}</a>
+		</div>
+	</footer>
+</template>
