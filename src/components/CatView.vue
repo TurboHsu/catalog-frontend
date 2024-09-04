@@ -30,7 +30,7 @@ const handleImageLoad = () => {
 				class="relative flex items-center justify-center max-w-full max-h-full mt-4 overflow-hidden min-w-[20rem]"
 			>
 				<img
-					:src="`${basePicUrl}/${props.data.thumbnail}`"
+					v-lazy="`${basePicUrl}/${props.data.thumbnail}`"
 					@load="handleImageLoad()"
 					alt="Cat Image"
 					class="object-contain h-[20rem]"

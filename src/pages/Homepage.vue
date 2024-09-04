@@ -29,6 +29,9 @@ const fetchData = async (page: number) => {
 			return;
 		}
 		cats.value.push(...c);
+		if (!isLoaded.value) {
+			isLoaded.value = true;
+		}
 	} catch (e) {
 		toast.warning("Failed to fetch data");
 		console.warn(e);
@@ -36,7 +39,7 @@ const fetchData = async (page: number) => {
 };
 
 const handleScroll = async () => {
-	if (isLastPage.value) {
+	if (isLastPage.value || !isLoaded.value) {
 		return;
 	}
 	if (
@@ -72,7 +75,6 @@ const handleOpen = () => {
 
 onMounted(async () => {
 	await fetchData(page.value);
-	isLoaded.value = true;
 	window.addEventListener("scroll", handleScroll);
 	scrollUpdateCheck();
 });
