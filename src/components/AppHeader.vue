@@ -13,7 +13,7 @@ const navigateHome = () => {
 </script>
 
 <template>
-    <header class="sticky top-0 z-40 flex border-b bg-background/80 backdrop-blur-lg border-border">
+    <header class="sticky top-0 z-40 flex overflow-hidden border-b bg-background/80 backdrop-blur-lg border-border">
         <div class="container flex items-center h-14 max-w-screen-2xl" @click="navigateHome">
             <Icon icon="solar:cat-outline" class="h-[2rem] w-[2rem] mx-2" />
             <h1 class="hidden mx-2 text-xl md:flex">NekoMeow</h1>

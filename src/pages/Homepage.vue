@@ -84,7 +84,7 @@ onBeforeUnmount(() => {
 
 <template>
 	<Dialog>
-		<div class="flex justify-center items-center h-full w-full min-h-[80vh]">
+		<div class="flex justify-center items-center h-full w-full min-h-[80vh] overflow-x-hidden">
 			<div
 				v-if="isLoaded"
 				class="flex flex-col items-center justify-center gap-10 my-10"

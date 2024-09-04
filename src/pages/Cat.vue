@@ -22,9 +22,9 @@ onMounted(async () => {
 
 <template>
     <Card class="mx-10 my-10">
-        <CardHeader class="flex flex-row items-center gap-5">
+        <CardHeader class="flex flex-row flex-wrap items-center gap-5">
             <Icon icon="fa6-solid:cat" class="w-8 h-8" />
-            <span>Cat ID: {{ route.params.uuid }}</span>
+            <span class="break-all ">Cat ID: {{ route.params.uuid }}</span>
         </CardHeader>
         <CardContent>
             <ChunkCatView v-if="cat" :data="cat" />
