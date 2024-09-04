@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 
 const route = useRoute();
 const cat = ref<Cat>();
+const noSuchCat = ref<boolean>(false);
 
 const goBack = () => {
 	window.history.back();
@@ -26,6 +27,7 @@ onMounted(async () => {
 		console.error(e);
 		if (e?.response?.status === 404) {
 			toast.error("No such cat");
+			noSuchCat.value = true;
 		}
 	}
 });
@@ -39,7 +41,7 @@ onMounted(async () => {
 		</CardHeader>
 		<CardContent>
 			<ChunkCatView v-if="cat" :data="cat" />
-			<div v-else class="w-full h-[60vh] flex flex-col items-center justify-center">
+			<div v-if="noSuchCat" class="w-full h-[60vh] flex flex-col items-center justify-center">
 				<div class="flex flex-col justify-center w-full my-2">
                     <div class="flex justify-center w-full">
                         <Icon icon="line-md:alert-circle-twotone" class="w-16 h-16 text-orange-400" />
