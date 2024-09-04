@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import DialogTrigger from "@/components/ui/dialog/DialogTrigger.vue";
 import DialogContent from "@/components/ui/dialog/DialogContent.vue";
 import ChunkCatView from "@/components/ChunkCatView.vue";
+import { useRouter } from "vue-router";
 
 const isLoaded = ref<boolean>(false);
 const page = ref<number>(1);
@@ -18,6 +19,7 @@ const isLoadingMore = ref<boolean>(false);
 const isLastPage = ref<boolean>(false);
 const cats = ref<Cat[]>([]);
 const selectedCat = ref<Cat | null>(null);
+const router = useRouter();
 
 const fetchData = async (page: number) => {
 	try {
@@ -65,7 +67,7 @@ const handleCatViewClick = async (cat: Cat) => {
 };
 
 const handleOpen = () => {
-    window.open(`/cat/${selectedCat.value?.uuid}`, "_blank");
+    router.push(`/cat/${selectedCat.value?.uuid}`)
 };
 
 onMounted(async () => {
