@@ -7,7 +7,7 @@ import { Icon } from '@iconify/vue';
 </script>
 
 <template>
-    <Card class="w-full min-h-[80vh] mx-10 my-10">
+    <Card class="w-full min-h-[80vh] md:mx-10 my-10 overflow-x-hidden">
         <CardHeader class="flex flex-row items-center gap-5">
             <Icon icon="ph:info-bold" class="w-8 h-8" />
             <span>About</span>
