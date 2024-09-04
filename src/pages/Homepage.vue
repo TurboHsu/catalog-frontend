@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CatView from "../components/CatView.vue";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import Loading from "../components/Loading.vue";
 import { toast } from "vue-sonner";
 import { Cat } from "@/types/cat";
@@ -12,6 +12,8 @@ import DialogTrigger from "@/components/ui/dialog/DialogTrigger.vue";
 import DialogContent from "@/components/ui/dialog/DialogContent.vue";
 import ChunkCatView from "@/components/ChunkCatView.vue";
 import { useRouter } from "vue-router";
+import { useElementVisibility } from "@vueuse/core";
+import sleep from "@/utils/common/sleep";
 
 const isLoaded = ref<boolean>(false);
 const page = ref<number>(1);
@@ -20,6 +22,8 @@ const isLastPage = ref<boolean>(false);
 const cats = ref<Cat[]>([]);
 const selectedCat = ref<Cat | null>(null);
 const router = useRouter();
+const footerRef = ref<HTMLElement | null>(null);
+const footerVisibility = useElementVisibility(footerRef);
 
 const fetchData = async (page: number) => {
 	try {
@@ -38,15 +42,14 @@ const fetchData = async (page: number) => {
 	}
 };
 
-const handleScroll = async () => {
+const handleReachFooter = async () => {
 	if (isLastPage.value || !isLoaded.value) {
 		return;
 	}
 	if (
-		window.innerHeight + window.scrollY >= document.body.offsetHeight - 50 &&
+		footerVisibility.value &&
 		!isLoadingMore.value
 	) {
-		console.log("loading more");
 		isLoadingMore.value = true;
 		page.value++;
 		await fetchData(page.value);
@@ -54,12 +57,13 @@ const handleScroll = async () => {
 	}
 };
 
-const scrollUpdateCheck = async () => {
-    while (document.body.offsetHeight <= window.innerHeight) {
+const footerVisibilityCheck = async () => {
+    while (footerVisibility.value) {
 		if (isLastPage.value) {
 			break
 		}
-        await handleScroll();
+        await handleReachFooter();
+		await sleep(100);
     }
 };
 
@@ -75,12 +79,12 @@ const handleOpen = () => {
 
 onMounted(async () => {
 	await fetchData(page.value);
-	window.addEventListener("scroll", handleScroll);
-	scrollUpdateCheck();
 });
 
-onBeforeUnmount(() => {
-	window.removeEventListener("scroll", handleScroll);
+watch(footerVisibility, async (footerVisibility) => {
+	if (footerVisibility) {
+		await footerVisibilityCheck();
+	}
 });
 </script>
 
@@ -103,7 +107,7 @@ onBeforeUnmount(() => {
 					<span class="text-lg font-semibold">No more cats to show</span>
 				</div>
 				<div v-else>
-					<Icon icon="tdesign:cat" class="h-[2rem] w-[2rem] animate-spin" />
+					<Icon icon="tdesign:cat" class="h-[2rem] w-[2rem] animate-spin" ref="footerRef"/>
 				</div>
 			</div>
 			<div v-else class="w-full h-full">

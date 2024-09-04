@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { Cat } from "@/types/cat";
 import { Icon } from "@iconify/vue";
 
@@ -9,15 +8,10 @@ interface Props {
 
 const props = defineProps<Props>();
 const basePicUrl = import.meta.env.VITE_CDN_ADDR;
-const loaded = ref<boolean>(false);
 
 const timeToString = (time: string) => {
 	const date = new Date(time);
 	return date.toLocaleString();
-};
-
-const handleImageLoad = () => {
-	loaded.value = true;
 };
 </script>
 <template>
@@ -25,15 +19,9 @@ const handleImageLoad = () => {
 		class="relative flex items-center justify-center max-w-full max-h-full mt-4 overflow-hidden"
 	>
 		<img
-			:src="`${basePicUrl}/${props.data.image}`"
-			@load="handleImageLoad()"
+			v-lazy="`${basePicUrl}/${props.data.image}`"
 			alt="Cat Image"
 			class="object-contain max-h-[60vh] w-auto"
-		/>
-		<Icon
-			v-if="!loaded"
-			icon="fa6-solid:cat"
-			class="h-[4rem] w-[4rem] z-10 animate-pulse absolute"
 		/>
 	</div>
 	<div class="flex flex-col w-full gap-1 my-4">

@@ -26,15 +26,15 @@ app.use(VueLazyLoad, {
 	loading: "/cat.svg",
 	error: "/fail.svg",
 	lifecycle: {
-		loading: (el) => {
-			console.log("loading", el);
-		},
+		// loading: (el) => {
+		// 	console.log("loading", el);
+		// },
 		error: (el) => {
-			console.log("error", el);
+			console.warn("error on lazy load: ", el);
 		},
-		loaded: (el) => {
-			console.log("loaded", el);
-		},
+		// loaded: (el) => {
+		// 	console.log("loaded", el);
+		// },
 	},
 });
 

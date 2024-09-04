@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { Cat } from "@/types/cat";
 import { Icon } from "@iconify/vue";
 import Card from "./ui/card/Card.vue";
@@ -12,15 +11,10 @@ interface Props {
 
 const props = defineProps<Props>();
 const basePicUrl = import.meta.env.VITE_CDN_ADDR;
-const loaded = ref<boolean>(false);
 
 const timeToString = (time: string) => {
 	const date = new Date(time);
 	return date.toLocaleString();
-};
-
-const handleImageLoad = () => {
-	loaded.value = true;
 };
 </script>
 <template>
@@ -31,14 +25,8 @@ const handleImageLoad = () => {
 			>
 				<img
 					v-lazy="`${basePicUrl}/${props.data.thumbnail}`"
-					@load="handleImageLoad()"
 					alt="Cat Image"
 					class="object-contain h-[20rem]"
-				/>
-				<Icon
-					v-if="!loaded"
-					icon="fa6-solid:cat"
-					class="h-[4rem] w-[4rem] z-10 animate-pulse absolute"
 				/>
 			</div>
 		</CardContent>
