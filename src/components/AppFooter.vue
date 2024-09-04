@@ -18,7 +18,7 @@ const footer = import.meta.env.VITE_APP_FOOTER;
 		<div
 			class="container flex items-center justify-center space-x-2 whitespace-nowrap md:justify-end"
 		>
-			<a :herf="footerLink">{{ footer }}</a>
+			<a :href="footerLink">{{ footer }}</a>
 		</div>
 	</footer>
 </template>
