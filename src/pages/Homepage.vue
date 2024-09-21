@@ -14,7 +14,6 @@ import ChunkCatView from "@/components/ChunkCatView.vue";
 import { useRouter } from "vue-router";
 import { useElementVisibility } from "@vueuse/core";
 import sleep from "@/utils/common/sleep";
-import DialogTitle from "@/components/ui/dialog/DialogTitle.vue";
 
 const isLoaded = ref<boolean>(false);
 const page = ref<number>(1);
