@@ -4,6 +4,8 @@ import { Icon } from "@iconify/vue";
 import Card from "./ui/card/Card.vue";
 import CardContent from "./ui/card/CardContent.vue";
 import CardFooter from "./ui/card/CardFooter.vue";
+import { computed } from "vue";
+import SolarStickerSmileCircleLinear from "./icon/SolarStickerSmileCircleLinear.vue";
 
 interface Props {
 	data: Cat;
@@ -11,6 +13,9 @@ interface Props {
 
 const props = defineProps<Props>();
 const basePicUrl = import.meta.env.VITE_CDN_ADDR;
+const totalReactions = computed(() =>
+	props.data.reactions.reduce((acc, reaction) => acc + reaction.count, 0)
+);
 
 const timeToString = (time: string) => {
 	const date = new Date(time);
@@ -46,6 +51,10 @@ const timeToString = (time: string) => {
 					<span class="ml-2 font-semibold">{{ props.data.caption }}</span>
 				</div>
 				<div v-else class="mt-6"></div>
+				<div v-if="totalReactions > 0" class="flex flex-row items-center">
+					<SolarStickerSmileCircleLinear class="h-[1rem] w-[1rem]" />
+					<span class="ml-2 font-semibold">{{ totalReactions }}</span>
+				</div>
 			</div>
 		</CardFooter>
 	</Card>

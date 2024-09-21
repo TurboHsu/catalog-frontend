@@ -1,5 +1,6 @@
 import { Cat } from "@/types/cat";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import getFingerprint from "../common/fingerprint";
 
 const url_path: string = import.meta.env.VITE_BACKEND_ADDR as string;
 const api = axios.create({
@@ -37,9 +38,49 @@ function clearCache(): void {
     }
 }
 
+async function addReaction(uuid: string, reaction: string) {
+    try {
+        const fingerprint = await getFingerprint();
+        const response = await api.get(`/api/cat/add_reaction?cat=${uuid}&reaction=${reaction}&fingerprint=${fingerprint}`);
+        const error: string = response.data.error;
+        if (error && error !== "") {
+            throw error
+        }
+    } catch (e) {
+        console.error("Failed to add reaction:", e)
+        throw e
+    } 
+}
+
+async function removeReaction(uuid: string, reaction: string) {
+    try {
+        const fingerprint = await getFingerprint();
+        const response = await api.get(`/api/cat/remove_reaction?cat=${uuid}&reaction=${reaction}&fingerprint=${fingerprint}`);
+        const error: string = response.data.error;
+        if (error && error !== "") {
+            throw error
+        }
+    } catch (e) {
+        console.error("Failed to remove reaction:", e)
+        throw e
+    }
+}
+
+async function fetchReactions(): Promise<string[]> {
+    try {
+        const response = await fetchWithCache('/api/cat/valid_reactions');
+        const reactions: string[] = response.data.data
+        return reactions
+    } catch (e) {
+        console.error("Failed to fetch reactions:", e)
+        throw e
+    }
+}
+
 async function fetchCats(page: number): Promise<Cat[]> {
     try {
-        const response = await fetchWithCache(`/api/cat/get?page=${page}&page-size=${import.meta.env.VITE_PAGE_SIZE}`);
+        const fingerprint = await getFingerprint();
+        const response = await fetchWithCache(`/api/cat/get?page=${page}&page-size=${import.meta.env.VITE_PAGE_SIZE}&fingerprint=${fingerprint}`);
         const cats: Cat[] = response.data.data
         return cats
     } catch (e) {
@@ -50,7 +91,8 @@ async function fetchCats(page: number): Promise<Cat[]> {
 
 async function fetchCat(uuid: string): Promise<Cat> {
     try {
-        const response = await fetchWithCache(`/api/cat/get_by_id?uuid=${uuid}`);
+        const fingerprint = await getFingerprint();
+        const response = await fetchWithCache(`/api/cat/get_by_id?uuid=${uuid}&fingerprint=${fingerprint}`);
         const cat: Cat = response.data.data
         return cat
     } catch (e) {
@@ -60,4 +102,4 @@ async function fetchCat(uuid: string): Promise<Cat> {
     
 }
 
-export { fetchWithCache, clearCache, fetchCats, fetchCat };
+export { fetchWithCache, clearCache, fetchCats, fetchCat, fetchReactions, addReaction, removeReaction };
