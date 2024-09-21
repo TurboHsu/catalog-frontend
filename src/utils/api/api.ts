@@ -1,3 +1,4 @@
+import { Reaction } from './../../types/cat';
 import { Cat } from "@/types/cat";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import getFingerprint from "../common/fingerprint";
@@ -82,6 +83,11 @@ async function fetchCats(page: number): Promise<Cat[]> {
         const fingerprint = await getFingerprint();
         const response = await fetchWithCache(`/api/cat/get?page=${page}&page-size=${import.meta.env.VITE_PAGE_SIZE}&fingerprint=${fingerprint}`);
         const cats: Cat[] = response.data.data
+        cats.forEach((cat: Cat) => {
+            if (!cat.reactions) {
+                cat.reactions = <Reaction[]>[]
+            }
+        })
         return cats
     } catch (e) {
         console.error("Failed to fetch cats:", e)
@@ -94,6 +100,9 @@ async function fetchCat(uuid: string): Promise<Cat> {
         const fingerprint = await getFingerprint();
         const response = await fetchWithCache(`/api/cat/get_by_id?uuid=${uuid}&fingerprint=${fingerprint}`);
         const cat: Cat = response.data.data
+        if (!cat.reactions) {
+            cat.reactions = <Reaction[]>[]
+        }
         return cat
     } catch (e) {
         console.error("Failed to fetch cat:", e)
