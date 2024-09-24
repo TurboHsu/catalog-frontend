@@ -33,13 +33,14 @@ const fetchData = async (page: number) => {
 			return;
 		}
 		cats.value.push(...c);
-		if (!isLoaded.value) {
-			isLoaded.value = true;
-		}
 	} catch (e) {
 		toast.warning("Failed to fetch data");
 		console.warn(e);
-	}
+	} finally {
+        if (!isLoaded.value) {
+            isLoaded.value = true;
+        }
+    }
 };
 
 const handleReachFooter = async () => {
