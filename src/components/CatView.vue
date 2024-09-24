@@ -20,16 +20,13 @@ const timeToString = (time: string) => {
 </script>
 <template>
     <Card class="flex-1 w-auto h-auto">
-        <CardContent>
-            <div
-                class="relative flex items-center justify-center max-w-full max-h-full mt-4 overflow-hidden min-w-[20rem]"
-            >
-                <img
-                    v-lazy="`${basePicUrl}/${props.data.thumbnail}`"
-                    alt="Cat Image"
-                    class="object-contain h-[20rem]"
-                />
-            </div>
+        <CardContent
+            class="flex items-center justify-center max-w-full max-h-full mt-4 overflow-clip">
+            <img
+                v-lazy="`${basePicUrl}/${props.data.thumbnail}`"
+                alt="Cat Image"
+                class="object-contain w-[20rem] h-[20rem]"
+            />
         </CardContent>
         <CardFooter>
             <div class="flex flex-col w-full gap-1">
