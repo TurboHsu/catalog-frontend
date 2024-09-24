@@ -1,4 +1,4 @@
-import { Reaction } from './../../types/cat';
+import { Reaction } from '@/types/cat.ts';
 import { Cat } from "@/types/cat";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import getFingerprint from "../common/fingerprint";
