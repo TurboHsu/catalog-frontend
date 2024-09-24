@@ -10,15 +10,19 @@ import DropdownMenuContent from "./ui/dropdown-menu/DropdownMenuContent.vue";
 import DropdownMenuItem from "./ui/dropdown-menu/DropdownMenuItem.vue";
 import {toast} from "vue-sonner";
 import ReactionView from "@/components/ReactionView.vue";
+import {useElementSize} from "@vueuse/core";
 
 interface Props {
     data: Cat;
+    catRatio?: number
 }
 
 const props = defineProps<Props>();
 const basePicUrl = import.meta.env.VITE_CDN_ADDR;
 const validReactions = ref<string[]>([]);
 const remainingReaction = ref<string[]>([]);
+const catContainer = ref<HTMLDivElement | null>(null);
+const {width: catContainerWidth} = useElementSize(catContainer);
 
 const timeToString = (time: string) => {
     const date = new Date(time);
@@ -88,17 +92,20 @@ const onReactionClick = async (reaction: string) => {
 onMounted(async () => {
     validReactions.value = await fetchReactions();
     updateRemainingReaction();
+    console.log('ratio', props.catRatio)
 });
 </script>
 
 <template>
     <div
-        class="relative flex items-center justify-center max-w-full max-h-full mt-4 overflow-hidden"
+        class="relative flex items-center justify-center mt-4"
+        ref="catContainer"
     >
         <img
             v-lazy="`${basePicUrl}/${props.data.image}`"
             alt="Cat Image"
-            class="object-contain max-h-[60vh] w-auto"
+            class="object-contain max-w-42"
+            :style="typeof catRatio === 'number' && catRatio > 0 ? `height: ${catContainerWidth / catRatio}px` : ''"
         />
     </div>
     <div class="flex md:flex-row flex-col w-full">

@@ -10,13 +10,23 @@ interface Props {
     data: Cat;
 }
 
+interface Emits {
+    (e: 'load', ratio: number): void;
+}
+
 const props = defineProps<Props>();
+const emits = defineEmits<Emits>()
 const basePicUrl = import.meta.env.VITE_CDN_ADDR;
 
 const timeToString = (time: string) => {
     const date = new Date(time);
     return date.toLocaleString();
 };
+
+function onCatLoad(e: Event) {
+    const im = e.currentTarget as HTMLImageElement
+    emits('load', im.width / im.height)
+}
 </script>
 <template>
     <Card class="flex-1 w-auto h-auto">
@@ -26,6 +36,7 @@ const timeToString = (time: string) => {
                 v-lazy="`${basePicUrl}/${props.data.thumbnail}`"
                 alt="Cat Image"
                 class="object-contain w-[20rem] h-[20rem]"
+                @load="onCatLoad"
             />
         </CardContent>
         <CardFooter>
