@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const currentYear = new Date().getFullYear();
-const footerLink = import.meta.env.VITE_APP_FOOTER_LINK;
-const footer = import.meta.env.VITE_APP_FOOTER;
+	const currentYear = new Date().getFullYear()
+	const footerLink = import.meta.env.VITE_APP_FOOTER_LINK
+	const footer = import.meta.env.VITE_APP_FOOTER
 </script>
 
 <template>
