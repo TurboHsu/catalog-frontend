@@ -1,9 +1,23 @@
-# Vue 3 + TypeScript + Vite
+# Catalog-frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Cats are good, so it's a web page that shows off cat pics.
 
-## Recommended Setup
+## Deployment
 
--   [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+_You will need to deploy a `catalog-go` instance. Check out [catalog-go](https://github.com/TurboHsu/catalog-go)_
 
--   Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+Create a copy of `.env.example` and rename it to `.env`.
+
+Here are the environment variables you need to set:
+
+- `VITE_PAGE_SIZE`: The number of images to show per page (infinite scroll).
+- `VITE_BACKEND_ADDR`: The address of the backend API server.
+- `VITE_CDN_ADDR`: The address that can access cat pics.
+- `VITE_APP_FOOTER_LINK`: The footer link.
+- `VITE_APP_FOOTER`: The footer text.
+
+After setting everything up, run `pnpm i` to install dependencies, then run `pnpm build` to build the project.
+
+## Credits
+
+Thanks to all the cats i met.
