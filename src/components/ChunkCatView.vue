@@ -38,9 +38,9 @@ const onReactionClick = async (reaction: string) => {
     const r = props.data.reactions.find((r) => r.emoji === reaction);
     if (r) {
         if (r.is_reacted) {
+            r.is_reacted = false;
             try {
                 await removeReaction(props.data.uuid, reaction);
-                r.is_reacted = false;
                 r.count = r.count - 1;
                 if (r.count === 0) {
                     props.data.reactions = props.data.reactions.filter(
@@ -52,29 +52,35 @@ const onReactionClick = async (reaction: string) => {
                 toast.info(`Removed ${reaction}`);
             } catch (e) {
                 toast.error("Failed to add reaction");
+                r.is_reacted = true;
             }
         } else {
+            r.is_reacted = true;
             try {
                 await addReaction(props.data.uuid, reaction);
-                r.is_reacted = true;
                 r.count = r.count + 1;
                 toast.success(`Added ${reaction}`);
             } catch (e) {
                 toast.error("Failed to add reaction");
+                r.is_reacted = false;
             }
         }
     } else {
+        const rea = {
+            emoji: reaction,
+            count: 1,
+            is_reacted: false,
+        };
+        const insertIdx = props.data.reactions.length;
         try {
+            props.data.reactions.push(rea);
             await addReaction(props.data.uuid, reaction);
-            props.data.reactions.push({
-                emoji: reaction,
-                count: 1,
-                is_reacted: true,
-            });
+            props.data.reactions[insertIdx] = {...rea, is_reacted: true};
             updateRemainingReaction();
             toast.success(`Added ${reaction}`);
         } catch (e) {
             toast.error("Failed to add reaction");
+            props.data.reactions.splice(insertIdx)
         }
     }
 }
