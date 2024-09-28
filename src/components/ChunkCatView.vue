@@ -96,7 +96,6 @@
 	onMounted(async () => {
 		validReactions.value = await fetchReactions()
 		updateRemainingReaction()
-		console.log('ratio', props.catRatio)
 	})
 </script>
 
