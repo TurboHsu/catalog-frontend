@@ -25,7 +25,7 @@
 
 	function onCatLoad(e: Event) {
 		const im = e.currentTarget as HTMLImageElement
-		emits('load', im.width / im.height)
+		emits('load', im.naturalWidth / im.naturalHeight)
 	}
 </script>
 <template>

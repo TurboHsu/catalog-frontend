@@ -14,6 +14,7 @@
 	import { useRouter } from 'vue-router'
 	import { useElementVisibility } from '@vueuse/core'
 	import sleep from '@/utils/common/sleep'
+	import { ScrollArea } from '@/components/ui/scroll-area'
 
 	const isLoaded = ref<boolean>(false)
 	const page = ref<number>(1)
@@ -130,12 +131,15 @@
 		</div>
 		<DialogTrigger class="hidden" id="trigger" />
 
-		<DialogContent class="max-w-[25rem] md:max-w-[40rem] max-h-[85vh] overflow-auto">
-			<ChunkCatView
-				v-if="selectedCat"
-				:data="selectedCat"
-				:cat-ratio="aspectRatios[selectedCat.idx]"
-			/>
+		<DialogContent class="max-w-[25rem] md:max-w-[40rem]">
+			<ScrollArea class="max-h-[85vh]" tabindex="-1">
+				<ChunkCatView
+					v-if="selectedCat"
+					:data="selectedCat"
+					:cat-ratio="aspectRatios[selectedCat.idx]"
+					class="mt-4"
+				/>
+			</ScrollArea>
 			<div class="flex justify-end w-full">
 				<Button
 					class="flex flex-row items-center gap-1"
