@@ -130,7 +130,7 @@
 		</div>
 		<DialogTrigger class="hidden" id="trigger" />
 
-		<DialogContent class="max-w-[30rem] max-md:max-w-[25rem]">
+		<DialogContent class="max-w-[25rem] md:max-w-[40rem] max-h-[85vh] overflow-auto">
 			<ChunkCatView
 				v-if="selectedCat"
 				:data="selectedCat"
