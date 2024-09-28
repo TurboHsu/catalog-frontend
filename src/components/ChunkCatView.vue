@@ -100,58 +100,63 @@
 </script>
 
 <template>
-	<div
-		class="relative flex items-center justify-center mt-4"
-		ref="catContainer"
-	>
-		<img
-			v-lazy="`${basePicUrl}/${props.data.image}`"
-			alt="Cat Image"
-			class="object-contain max-w-42"
-			:style="
-				typeof catRatio === 'number' && catRatio > 0
-					? `height: ${catContainerWidth / catRatio}px`
-					: ''
-			"
-		/>
-	</div>
-	<div class="flex md:flex-row flex-col w-full">
-		<div class="flex flex-col flex-1 gap-1 my-4">
-			<div class="flex flex-row items-center">
-				<Icon icon="mdi:clock-outline" class="h-[1rem] w-[1rem]" />
-				<span class="ml-2 font-semibold">{{
-					timeToString(props.data.created_at)
-				}}</span>
-			</div>
-			<div
-				v-if="props.data.caption.length"
-				class="flex flex-row items-center"
-			>
-				<Icon icon="ph:chat-bold" class="h-[1rem] w-[1rem]" />
-				<span class="ml-2 font-semibold">{{ props.data.caption }}</span>
-			</div>
-			<div v-else class="mt-6"></div>
+	<div class="flex items-start flex-wrap gap-4" v-bind="$attrs">
+		<div
+			class="relative flex items-center justify-center flex-[2] min-w-48"
+			ref="catContainer"
+		>
+			<img
+				v-lazy="`${basePicUrl}/${props.data.image}`"
+				alt="Cat Image"
+				class="object-contain max-w-42"
+				:style="
+					typeof catRatio === 'number' && catRatio > 0
+						? `height: ${catContainerWidth / catRatio}px`
+						: ''
+				"
+			/>
 		</div>
-		<div class="flex flex-row gap-1 flex-wrap md:max-w-96">
-			<DropdownMenu v-if="remainingReaction?.length !== 0">
-				<ReactionView
-					v-for="r in data.reactions"
-					:value="r"
-					@click="onReactionClick"
-				/>
-				<DropdownMenuTrigger as-child>
-					<Badge class="h-6 text-lg hover:cursor-pointer"> +</Badge>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent>
-					<DropdownMenuItem
-						v-for="r in remainingReaction"
-						class="text-lg flex items-center justify-center"
-						@click="onReactionClick(r)"
-					>
-						{{ r }}
-					</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
+		<div class="flex-1 flex flex-wrap gap-2 items-start">
+			<div class="space-y-2 min-w-52">
+				<div class="flex flex-row items-center">
+					<Icon icon="mdi:clock-outline" class="h-[1rem] w-[1rem]" />
+					<span class="ml-2 font-semibold">{{
+						timeToString(props.data.created_at)
+					}}</span>
+				</div>
+				<div
+					v-if="props.data.caption.length"
+					class="flex flex-row items-center"
+				>
+					<Icon icon="ph:chat-bold" class="h-[1rem] w-[1rem]" />
+					<span class="ml-2 font-semibold">{{
+						props.data.caption
+					}}</span>
+				</div>
+			</div>
+			<div class="flex-grow flex flex-row gap-1 flex-wrap">
+				<DropdownMenu v-if="remainingReaction?.length !== 0">
+					<ReactionView
+						v-for="r in data.reactions"
+						:value="r"
+						@click="onReactionClick"
+					/>
+					<DropdownMenuTrigger as-child>
+						<Badge class="h-6 text-lg hover:cursor-pointer">
+							+
+						</Badge>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent>
+						<DropdownMenuItem
+							v-for="r in remainingReaction"
+							class="text-lg flex items-center justify-center"
+							@click="onReactionClick(r)"
+						>
+							{{ r }}
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			</div>
 		</div>
 	</div>
 </template>
