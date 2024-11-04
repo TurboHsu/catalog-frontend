@@ -38,6 +38,7 @@
 			aspectRatios.push(-1)
 		} catch (e) {
 			toast.warning('Failed to fetch data')
+			isLastPage.value = true // Not loading more if failed
 			console.warn(e)
 		} finally {
 			if (!isLoaded.value) {
