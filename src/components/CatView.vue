@@ -62,10 +62,13 @@
 					class="flex flex-row items-center gap-1 mt-4"
 				>
 					<ReactionView
-						v-for="r in data.reactions"
+						v-for="r in data.reactions.slice(0, 4)"
 						:value="r"
 						disabled
 					/>
+					<div v-if="data.reactions.length > 4" class="ml-2">
+						...
+					</div>
 				</div>
 			</div>
 		</CardFooter>

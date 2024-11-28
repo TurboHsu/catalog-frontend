@@ -100,7 +100,7 @@
 </script>
 
 <template>
-	<div class="flex items-start flex-wrap gap-4" v-bind="$attrs">
+	<div class="flex flex-wrap items-start gap-4" v-bind="$attrs">
 		<div
 			class="relative flex items-center justify-center flex-[2] min-w-48"
 			ref="catContainer"
@@ -116,7 +116,7 @@
 				"
 			/>
 		</div>
-		<div class="flex-1 flex flex-wrap gap-2 items-start">
+		<div class="flex flex-wrap items-start flex-1 gap-2">
 			<div class="space-y-2 min-w-52">
 				<div class="flex flex-row items-center">
 					<Icon icon="mdi:clock-outline" class="h-[1rem] w-[1rem]" />
@@ -134,14 +134,14 @@
 					}}</span>
 				</div>
 			</div>
-			<div class="flex-grow flex flex-row gap-1 flex-wrap">
-				<DropdownMenu v-if="remainingReaction?.length !== 0">
+			<div class="flex flex-row flex-wrap flex-grow gap-1">
+				<DropdownMenu>
 					<ReactionView
 						v-for="r in data.reactions"
 						:value="r"
 						@click="onReactionClick"
 					/>
-					<DropdownMenuTrigger as-child>
+					<DropdownMenuTrigger v-if="remainingReaction?.length !== 0" as-child>
 						<Badge class="h-6 text-lg hover:cursor-pointer">
 							+
 						</Badge>
@@ -149,7 +149,7 @@
 					<DropdownMenuContent>
 						<DropdownMenuItem
 							v-for="r in remainingReaction"
-							class="text-lg flex items-center justify-center"
+							class="flex items-center justify-center text-lg"
 							@click="onReactionClick(r)"
 						>
 							{{ r }}
