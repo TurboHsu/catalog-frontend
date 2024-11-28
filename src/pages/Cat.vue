@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import ChunkCatView from '@/components/ChunkCatView.vue'
+	import ChonkCatView from '@/components/ChonkCatView.vue'
 	import Card from '@/components/ui/card/Card.vue'
 	import CardContent from '@/components/ui/card/CardContent.vue'
 	import CardHeader from '@/components/ui/card/CardHeader.vue'
@@ -40,7 +40,7 @@
 			<span class="break-all">Cat ID: {{ route.params.uuid }}</span>
 		</CardHeader>
 		<CardContent>
-			<ChunkCatView v-if="cat" :data="cat" />
+			<ChonkCatView v-if="cat" :data="cat" />
 			<div
 				v-if="noSuchCat"
 				class="w-full h-[60vh] flex flex-col items-center justify-center"

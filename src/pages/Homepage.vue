@@ -10,7 +10,7 @@
 	import { Button } from '@/components/ui/button'
 	import DialogTrigger from '@/components/ui/dialog/DialogTrigger.vue'
 	import DialogContent from '@/components/ui/dialog/DialogContent.vue'
-	import ChunkCatView from '@/components/ChunkCatView.vue'
+	import ChonkCatView from '@/components/ChonkCatView.vue'
 	import { useRouter } from 'vue-router'
 	import { useElementVisibility } from '@vueuse/core'
 	import sleep from '@/utils/common/sleep'
@@ -134,7 +134,7 @@
 
 		<DialogContent class="max-w-[25rem] md:max-w-[40rem]">
 			<ScrollArea class="max-h-[85vh]" tabindex="-1">
-				<ChunkCatView
+				<ChonkCatView
 					v-if="selectedCat"
 					:data="selectedCat"
 					:cat-ratio="aspectRatios[selectedCat.idx]"
